@@ -1,0 +1,72 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  .accordion-container:first-child {
+    margin-bottom: nb-theme(card-margin-bottom);
+  }
+}
+
+
+.padding {
+    margin-bottom: 10px;
+}
+
+.accordion {
+    background-color: rgb(212, 221, 225);
+    cursor: pointer;
+    text-align: left;
+    outline: none;
+    transition: 0.4s;
+    width: 100%;
+    border-radius: 3px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    font-family: 'Open Sans', sans-serif;
+    color: #112D68 ;
+    border: none;
+
+}
+
+.button {
+    background-color: transparent;
+    cursor: pointer;
+    padding: 1px;
+    text-align: left;
+    outline: none;
+    transition: 0.4s;
+    width: 95%;
+    font-family: 'Open Sans', sans-serif;
+    color: #112D68 ;
+    border: none;
+}
+
+.active,
+.accordion:hover {
+    background-color: #ccc;
+}
+
+.panel {
+    padding: 0 20px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    font-size: 20px;
+    padding-top: 20px;
+
+}
+
+.panelText {
+    font-size: 16px;
+    color: black;
+}
+
+.center {
+    vertical-align: middle;
+    text-align: center
+}
+
+.fontBlue {
+    font-family: 'Open Sans', sans-serif;
+    color: #112D68 
+}

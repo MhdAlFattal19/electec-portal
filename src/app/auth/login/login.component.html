@@ -1,0 +1,39 @@
+<div class="login-bg">
+    <div class="login-card">
+        <div class="login-title">Login</div>
+        <div class="login-subtitle">Hello! Log in with your email.</div>
+
+        <form (ngSubmit)="login()" #form="ngForm" aria-labelledby="title">
+            <div class="form-fields">
+                <div class="form-row">
+                    <label for="input-email">Email address:</label>
+                    <input nbInput fullWidth [(ngModel)]="user.email" #email="ngModel" name="email" id="input-email" pattern=".+@.+\..+" placeholder="Enter your email" [status]="email.dirty ? (email.invalid  ? 'danger' : 'primary') : ''" [required]="getConfigValue('forms.validation.email.required')"
+                        [attr.aria-invalid]="email.invalid && email.touched ? true : null">
+                </div>
+                <div class="form-row">
+                    <label for="input-password">Password:</label>
+                    <a routerLink="/auth/forget-password" class="forgot-link">Forgot Password?</a>
+                    <input nbInput fullWidth [(ngModel)]="user.password" #password="ngModel" name="password" id="input-password" [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" [status]="password.dirty ? (password.invalid  ? 'danger' : 'primary') : ''"
+                        [required]="getConfigValue('forms.validation.password.required')" [minlength]="4" [maxlength]="20" [attr.aria-invalid]="password.invalid && password.touched ? true : null">
+                </div>
+            </div>
+            <button nbButton fullWidth status="primary" (click)="goToDashboard()" class="login-btn" [disabled]="submitted || !form.valid" [class.btn-pulse]="submitted">LOG IN</button>
+
+        </form>
+
+        <div class="or-text">or enter with:</div>
+        <div class="socials">
+            <button nbButton ghost shape="round" size="large">
+                <nb-icon icon="google" pack="eva"></nb-icon>
+            </button>
+            <button nbButton ghost shape="round" size="large">
+                <nb-icon icon="facebook" pack="eva"></nb-icon>
+            </button>
+        </div>
+
+        <div class="register-line">
+            Don't have an account? <a routerLink="/auth/register" class="register-link">Register</a>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,29 @@
+
+
+<div class="login-bg">
+    <div class="login-card">
+        <div class="login-title">Verification Code</div>
+        <div class="login-subtitle">Enter the 6-digit code we sent to your email address.</div>
+
+        <form (ngSubmit)="submitCode()" #form="ngForm" aria-labelledby="title">
+            <div class="code-inputs">
+            <input *ngFor="let digit of code; let i = index"
+                    nbInput
+                    maxlength="1"
+                    type="text"
+                    [(ngModel)]="code[i]"
+                    name="code{{i}}"
+                    required
+                    autocomplete="one-time-code"
+                    (input)="autoFocusNext(i, $event)">
+            </div>
+            <button nbButton fullWidth status="primary"  class="login-btn" (click)="onNavigateToLogin()" >Verify Code</button>
+
+        </form>
+
+
+  <div class="login-footer">
+    <a routerLink="/auth/register">Back to Register</a>
+    <a (click)="resendCode()">Resend Code</a>
+  </div>
+</div>

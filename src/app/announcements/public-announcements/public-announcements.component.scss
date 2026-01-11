@@ -1,0 +1,171 @@
+:host {
+    direction: rtl;
+    text-align: right;
+    font-size: 17px;
+}
+
+
+/* HEADER */
+
+.survey-header {
+    margin-bottom: 14px;
+    .header-content {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 16px;
+    }
+    .logo {
+        height: 50px;
+    }
+    .title h4 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 900;
+        color: #111827;
+    }
+    .title span {
+        font-size: 14px;
+        font-weight: 600;
+        color: #6b7280;
+    }
+}
+
+
+/* FORM */
+
+.survey-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.section-card {
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+}
+
+
+/* CARD HEADERS */
+
+nb-card-header {
+    font-size: 18px;
+    font-weight: 900;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1f3a5f;
+    background-color: #f8fafc;
+    border-right: 5px solid #2563eb;
+}
+
+
+/* CONTENT */
+
+.stack>* {
+    margin-bottom: 14px;
+}
+
+.field-label,
+.sub-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #374151;
+}
+
+input[nbInput],
+textarea[nbInput],
+nb-select {
+    font-size: 17px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: right;
+}
+
+
+/* RADIO */
+
+.radio-row {
+    display: flex;
+    gap: 28px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* CHECKBOX */
+
+.check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+
+/* ⭐ RATING */
+
+.rating-row {
+    display: flex;
+    gap: 12px;
+    font-size: 34px;
+}
+
+.rating-row nb-icon {
+    cursor: pointer;
+    color: #d1d5db;
+    transition: color 0.2s ease;
+}
+
+.rating-row nb-icon.active {
+    color: #f59e0b;
+}
+
+
+/* SUBMIT */
+
+.submit-area {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0 20px;
+}
+
+.submit-btn {
+    width: 100%;
+    max-width: 460px;
+    height: 52px;
+    font-size: 18px;
+    font-weight: 900;
+    border-radius: 12px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+     :host {
+        font-size: 18px;
+    }
+    .check-grid {
+        grid-template-columns: 1fr;
+    }
+    .title h4 {
+        font-size: 20px;
+    }
+}
+
+.error {
+    font-size: 13px;
+    color: #dc2626;
+    /* أحمر أنيق */
+    font-weight: 700;
+    margin-top: -6px;
+}
+
+
+/* Disabled button */
+
+button[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

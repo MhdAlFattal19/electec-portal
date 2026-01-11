@@ -1,0 +1,115 @@
+.title-Left {
+  text-align: start;
+  color: #112D68 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem !important;
+  font-weight: bold;
+}
+
+.Subtitle-Left{
+    text-align: start;
+    color: #112D68 !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.Label-blue{
+  text-align: start;
+  color: #112D68 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.lable {
+  text-align: start;
+  color: black !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem !important;
+}
+
+.container {
+  background-color: #fff;
+  border: 1px solid #fff;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  padding: 2rem;
+  margin: auto;
+}
+
+.BgBlue {
+  background-color: #112D68;
+}
+
+.FpBlue {
+  color: #112D68;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #112D68;
+  font-family: 'Montserrat', sans-serif;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #112D68;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.field{
+    color: #112D68;
+    border: 0.12rem solid #112D68;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+
+.ng-select .ng-select-container {
+  border: none !important;
+  flex-wrap: nowrap !important;
+}
+
+.ng-select .ng-value-container{
+  color: #112D68;
+  flex-wrap: nowrap !important;
+}
+
+/* .ng-select .ng-input{
+  padding-top: 5px !important;
+  padding-left: 7px !important;
+  padding-bottom: 0px !important;
+  padding-right: 0px !important;
+} */
+
+.ng-select .ng-value{
+  border: none;
+  background-color: transparent !important;
+  color: #112D68 !important;
+}
+
+/* .ng-select.ng-select-focused:not(.ng-select-closed)>.ng-select-container {
+  border-color: red !important;
+}
+
+.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+  border-color: red !important;
+} */
+
+.ng-select.ng-select-focused:not(.ng-select-opened)>.ng-select-container {
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 0 3px rgba(0,126,255,0.1);
+}
+
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: #112D68 transparent transparent!important
+}
+
+/* .ng-select span.ng-arrow-wrapper:before {
+  content: "\f0ab";
+  display: none !important;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+} */

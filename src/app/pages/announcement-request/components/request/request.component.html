@@ -1,0 +1,89 @@
+<div class="main-container">
+  <div class="row row-center px-4" style="align-items: center;">
+    <div class="col row row-center" style="align-items: center;">
+      <div class="header-container">
+        <h1>Announcement Request</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Header -->
+
+  <!-- Announcements List -->
+  <div class="announcement-container">
+    <nb-card *ngFor="let announcement of announcements" class="announcement-card">
+      <nb-card-body>
+        <div class="announcement-image-container">
+          <img [src]="announcement.image" alt="{{announcement.title}}" class="announcement-image">
+        </div>
+        <h3 class="announcement-title">{{ announcement.title }}</h3>
+        <p class="announcement-description">{{ announcement.description }}</p>
+        <div class="announcement-info">
+          <span><nb-icon icon="pin-outline"></nb-icon> {{ announcement.location }}</span>
+          <span><nb-icon icon="phone-outline"></nb-icon> {{ announcement.contact }}</span>
+        </div>
+        <div class="announcement-actions">
+          <button nbButton size="small" status="success" (click)="onApproveModalOpen(approveTemplate , announcement.id)">
+            <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+          </button>
+          <button nbButton size="small" status="danger" (click)="onDeclineModalOpen(declineTemplate , announcement.id)">
+            <nb-icon icon="close-circle-outline"></nb-icon>
+          </button>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+
+
+<ng-template #approveTemplate let-model>
+    <section id="basic-input">
+        <div class="row bg-lightGray">
+            <div class="col-12">
+                <div class="card bg-lightGray-card">
+                    <div class="card-header">
+                        <h4 class="Subtitle-Left">{{'Approve Announcement'}}</h4>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <p>{{ 'Are You Sure You Want To approve announcement?'}}</p>
+                    </div>
+                    <div class="row mb-2 mr-2">
+                        <div class="col-md-12">
+                            <div class="text-right">
+                                <button class="btn round mr1-ml-1 button-white" (click)="closePopUp()">{{'Cancel'}}</button>
+                                <button class="btn round mr-1 ml-1 button-green" (click)="approveAnnouncement()">{{'Save'}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-template>
+
+
+<ng-template #declineTemplate let-model>
+    <section id="basic-input">
+        <div class="row bg-lightGray">
+            <div class="col-12">
+                <div class="card bg-lightGray-card">
+                    <div class="card-header">
+                        <h4 class="Subtitle-Left">{{'Decline Announcement'}}</h4>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <p>{{ 'Are You Sure You Want To decline announcement?'}}</p>
+                    </div>
+                    <div class="row mb-2 mr-2">
+                        <div class="col-md-12">
+                            <div class="text-right">
+                                <button class="btn round mr1-ml-1 button-white" (click)="closePopUp()">{{'Cancel'}}</button>
+                                <button class="btn round mr-1 ml-1 button-green" (click)="declineAnnouncement()">{{'Save'}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-template>

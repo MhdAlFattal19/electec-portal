@@ -1,0 +1,130 @@
+<nb-layout>
+    <nb-layout-column>
+
+        <!-- HEADER -->
+        <nb-card class="survey-header">
+            <div class="header-content">
+                <img src="assets/images/logo.png" class="logo" />
+                <div class="title">
+                    <h4>تقرير صيانة / تركيب</h4>
+                    <span>نموذج خدمة العملاء</span>
+                </div>
+            </div>
+        </nb-card>
+
+        <form [formGroup]="form" class="survey-form">
+
+            <!-- معلومات العميل -->
+            <nb-card class="section-card">
+                <nb-card-header>
+                    <nb-icon icon="person-outline"></nb-icon>
+                    معلومات العميل
+                </nb-card-header>
+
+                <nb-card-body class="stack">
+
+                    <input nbInput fullWidth placeholder="الاسم الكامل" formControlName="fullName" />
+                    <div class="error" *ngIf="isInvalid('fullName')">
+                        الاسم الكامل مطلوب
+                    </div>
+
+                    <input nbInput fullWidth placeholder="رقم الموبايل" formControlName="mobile" />
+                    <div class="error" *ngIf="isInvalid('mobile')">
+                        رقم الموبايل مطلوب
+                    </div>
+
+                    <input nbInput fullWidth placeholder="اسم الفني" formControlName="technicianName" />
+                    <div class="error" *ngIf="isInvalid('technicianName')">
+                        اسم الفني مطلوب
+                    </div>
+
+                    <nb-select fullWidth placeholder="نوع الخدمة" formControlName="serviceType">
+                        <nb-option value="maintenance">صيانة</nb-option>
+                        <nb-option value="installation">تركيب</nb-option>
+                    </nb-select>
+                    <div class="error" *ngIf="isInvalid('serviceType')">
+                        نوع الخدمة مطلوب
+                    </div>
+
+                </nb-card-body>
+            </nb-card>
+
+            <!-- تفاصيل العمل -->
+            <nb-card class="section-card">
+                <nb-card-header>
+                    <nb-icon icon="settings-outline"></nb-icon>
+                    تفاصيل العمل
+                </nb-card-header>
+
+                <nb-card-body class="stack">
+
+                    <label class="field-label">هل تمت الصيانة / التركيب
+                        بنجاح؟</label>
+                    <nb-radio-group formControlName="success" class="radio-row">
+                        <nb-radio [value]="true">نعم</nb-radio>
+                        <nb-radio [value]="false">لا</nb-radio>
+                    </nb-radio-group>
+                    <div class="error" *ngIf="isInvalid('success')">
+                        الرجاء اختيار نعم أو لا
+                    </div>
+
+                    <input nbInput fullWidth placeholder="المبلغ المدفوع" formControlName="amount" />
+
+                    <div class="sub-title"> نوع الصيانة أو التركيب</div>
+                    <div formGroupName="maintenance" class="check-grid">
+                        <nb-checkbox formControlName="power">منظومة طاقة
+                        </nb-checkbox>
+                        <nb-checkbox formControlName="inverter">إنفرتر</nb-checkbox>
+                        <nb-checkbox formControlName="lithium">بطارية ليثيوم
+                        </nb-checkbox>
+                        <nb-checkbox formControlName="agm">بطارية AGM
+                        </nb-checkbox>
+                        <nb-checkbox formControlName="ups">UPS</nb-checkbox>
+                    </div>
+                    <div class="error" *ngIf="form.get('maintenance')?.invalid && form.get('maintenance')?.touched">
+                        يجب اختيار نوع صيانة واحد على الأقل
+                    </div>
+
+                </nb-card-body>
+            </nb-card>
+
+            <!-- التقييم -->
+            <nb-card class="section-card">
+                <nb-card-header>
+                    <nb-icon icon="star-outline"></nb-icon>
+                    التقييم والملاحظات
+                </nb-card-header>
+
+                <nb-card-body class="stack">
+
+                    <label class="field-label">مدى رضا العميل</label>
+
+                    <div class="rating-row">
+                        <nb-icon *ngFor="let star of stars; let i = index" icon="star" [class.active]="i < rating" (click)="setRating(i + 1)">
+                        </nb-icon>
+                    </div>
+
+                    <div class="error" *ngIf="isInvalid('rating')">
+                        التقييم مطلوب
+                    </div>
+
+                    <!-- الملاحظات (غير مطلوبة) -->
+                    <textarea nbInput fullWidth rows="4" placeholder="ملاحظات (اختياري)" formControlName="notes">
+      </textarea>
+
+                </nb-card-body>
+            </nb-card>
+
+            <!-- إرسال -->
+            <div class="submit-area">
+                <button nbButton status="primary" size="large" class="submit-btn" [disabled]="form.invalid || loading" (click)="submit()">
+
+                    {{ loading ? 'جاري الإرسال...' : 'إرسال التقرير' }}
+
+                </button>
+            </div>
+
+        </form>
+
+    </nb-layout-column>
+</nb-layout>

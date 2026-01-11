@@ -1,0 +1,41 @@
+<div class="p-3 back" *ngIf="!allSelected && allSelectedChecked" [@inAnimation]>
+    <div class="row">
+        <div class="col-md-6 text-right" style="font-size: 15px">
+            <span><b>{{ 'All Records on this Page are Selected' | translate }} : {{currentPageSelectedRecords}} </b></span>
+        </div>
+
+        <div class="col-md-6 text-left" style="font-size: 15px">
+            <span (click)="selectAllRecords()" class="action-btn p-2">
+                <b>
+                    {{ "Select All Records in" | translate}}
+                    {{ sectionName | translate}} : {{totalRecords}}
+                </b>
+                <b *ngIf="isFilterd">
+                    {{ "Matching Filters" | translate }}
+                </b>
+
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="p-3 back" *ngIf="allSelected && allSelectedChecked" [@inAnimation]>
+    <div class="row">
+        <div class="col-md-6 text-right" style="font-size: 15px">
+            <span><b>
+                    {{ "All Records in" | translate}}
+                    {{ sectionName | translate }} : {{totalRecords}}
+                </b>
+                <b *ngIf="isFilterd">
+                    {{ "Matching Filters" | translate}}
+                </b>
+                <b>
+                    {{ "are Selected" | translate }}
+                </b></span>
+        </div>
+
+        <div class="col-md-6 text-left" style="font-size: 15px">
+            <span class="action-btn p-2" (click)="clearSelection()"><b>{{"Clear Selection" | translate}}</b></span>
+        </div>
+    </div>
+</div>

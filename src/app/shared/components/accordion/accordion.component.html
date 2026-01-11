@@ -1,0 +1,27 @@
+<div class="accordion-container col-md-12 col-lg-12 col-xxxl-12 accordion">
+    <div class="accordion">
+        <nb-accordion multi>
+            <nb-accordion-item>
+                <nb-accordion-item-header>
+                    <input type="checkbox" [(ngModel)]="masterSelected" name="childCheck" value="m1"
+                        (change)="checkUncheckAll()" />
+                    <div class="button text-left">
+                        <b>{{accordionGroup.categoryName}}</b>
+                        <span class="float-right"><b>{{this.checkBoxSelectedCount}} {{'Assigned Activities'}} /
+                                {{this.accordionGroup.checkBoxList.length}}</b></span>
+                    </div>
+                </nb-accordion-item-header>
+                <nb-accordion-item-body>
+                    <div class="row pl-4">
+                        <div class="col-md-4 pl-1 pb-1 pt-1  text-left" *ngFor="let item of checklist">
+                            <input type="checkbox" [(ngModel)]="item.isSelected" name="childCheck" value="{{item.id}}"
+                                (change)="isAllSelected(true)" />
+                            {{item.name}}
+                        </div>
+                    </div>
+                </nb-accordion-item-body>
+            </nb-accordion-item>
+        </nb-accordion>
+    </div>
+
+</div>

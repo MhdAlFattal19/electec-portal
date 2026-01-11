@@ -1,0 +1,361 @@
+<div class="card m-0">
+    <div class="row row-center px-4" style="align-items: center;">
+        <div class="col row row-center" style="align-items: center;">
+            <div class="col-md-auto  text-start title"> {{ 'Clients'}}</div>
+        </div>
+        <div class="col-auto row-center justify-content-end">
+            <div class="col-md-auto p-0 pr-2 text-center title">
+                <img width="30" height="30" src="https://img.icons8.com/color/48/export-excel.png" alt="export-excel" />
+            </div>
+        </div>
+        <div *ngIf="isActivityAllowedByUser('/pages/users/client/add')" class="col-auto row-center" style="text-align: end;">
+            <button class="btn round button-blue" (click)="onAddClient()">
+                <nb-icon
+                    icon="plus-circle-outline"></nb-icon>{{'Add New Client'}}
+            </button>
+        </div>
+    </div>
+    <div class="row row-center px-4" style="align-items: center;">
+        <div class="col row row-center" style="align-items: center;">
+            <div class="col-md-auto  text-start Subtitle-Left-small"> {{ 'Manage your clients'}}</div>
+        </div>
+    </div>
+    <div class="row-center px-4">
+        <div class="col-md-auto text-center title">
+            <input class="form-control search" (keydown)="onSearch($event)" type="search" placeholder="{{'Search by name, email, phone number, ...'}}">
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <section id="ngx-datatables-server-side">
+        <div class="row p-0">
+            <div class="col-12">
+                <div class="card m-0">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <ngx-datatable class="bootstrap core-bootstrap" [externalPaging]="true" [count]="totalCount" [rows]="items" [columns]="columns" [messages]="this.ngxGridFacadeService.gridMessages" [columnMode]="this.ngxGridFacadeService.columnMode" [headerHeight]="this.ngxGridFacadeService.headerHeight"
+                                [footerHeight]="this.ngxGridFacadeService.footerHeight" [rowHeight]="this.ngxGridFacadeService.rowHeight" [limit]="pageSize" [externalSorting]="true" [scrollbarH]="true" (page)="onPageChanged($event)" (sort)="onSort($event)"
+                                (select)="onSelect($event)">
+                            </ngx-datatable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <ng-template #statusTemplate let-row="row" let-value="value" let-i="index">
+        <div *ngIf="row.status == 'Active'">
+            <div [disabled]="true" type="button" class="mr-1 ml-1 badge light-green">{{row.status}}</div>
+        </div>
+        <div *ngIf="row.status == 'InActive'">
+            <div [disabled]="true" type="button" class="mr-1 ml-1 badge light-red">{{row.status}}</div>
+        </div>
+    </ng-template>
+    <ng-template #actionsTemplate let-row="row" let-value="value" let-i="index">
+        <div>
+            <nb-icon (click)="openChangeStatus(changeStatusTemplate , row.id)" ngbTooltip='{{"Change Status"}}' class="text-warning cursor-pointer mr-2" icon="settings-outline"></nb-icon>
+            <nb-icon (click)="onNavigateToUpdateClient(row.id)" ngbTooltip='{{"edit"}}' class="text-primary cursor-pointer mr-2" icon="edit-outline"></nb-icon>
+            <nb-icon (click)="onDeleteModalOpen(deleteTemplate , row.id)" ngbTooltip='{{"delete"}}' class="text-danger cursor-pointer mr-2" icon="trash-2-outline"></nb-icon>
+            <nb-icon (click)="onResetPasswordModelOpen(resetPasswordTemplate,row.email)" ngbTooltip='{{"reset password"}}' class="text-success cursor-pointer mr-2" icon="lock-outline"></nb-icon>
+
+        </div>
+    </ng-template>
+    <ng-template #deleteTemplate let-model>
+        <section id="basic-input">
+            <div class="row bg-lightGray">
+                <div class="col-12">
+                    <div class="card bg-lightGray-card">
+                        <div class="card-header">
+                            <h4 class="Subtitle-Left">{{'Delete Client'}}</h4>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <p>{{ 'Are You Sure You Want To delete client?'}}</p>
+                        </div>
+                        <div class="row mb-2 mr-2">
+                            <div class="col-md-12">
+                                <div class="text-right">
+                                    <button class="btn round mr1-ml-1 button-white" (click)="closePopUp()">{{'Cancel'}}</button>
+                                    <button class="btn round mr-1 ml-1 button-green" (click)="deleteClient()">{{'Save'}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-template>
+
+    <ng-template #changeStatusTemplate let-row="row" let-model>
+        <section id="basic-input">
+            <div class="row bg-lightGray">
+                <div class="col-12">
+                    <div class="card bg-lightGray-card">
+                        <div class="card-header">
+                            <h4 class="Subtitle-Left">{{'Change Status Client'}}</h4>
+                        </div>
+                        <div style="padding: 1.5rem;">
+                            <p>{{ 'Are You Sure You Want To Change Status Client?'}}</p>
+                        </div>
+                        <div class="row mb-2 mr-2">
+                            <div class="col-md-12">
+                                <div class="text-right">
+                                    <button class="btn round mr1-ml-1 button-white" (click)="closePopUp()">{{'Cancel'}}</button>
+                                    <button class="btn round mr-1 ml-1 button-green" (click)="deleteClient()">{{'Save'}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-template>
+
+    <ng-template #addClientTemplate let-row="row" let-modal class="add-client-modal">
+        <section id="basic-input">
+            <div class="row bg-lightGray">
+                <div class="col-12">
+                    <div class="card bg-lightGray-card">
+                        <div class="card-header">
+                            <h4 class="Subtitle-Left">{{'Add New Client'}}</h4>
+                        </div>
+                        <div [formGroup]="form">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'First Name'}}</label>
+                                                <input type="text" class="form-control" formControlName="firstName" id="basicInput">
+                                                <span class="text-danger" *ngIf="displayMessage.firstName">
+                                                    {{displayMessage.firstName}}
+                                                </span>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Last Name'}}</label>
+                                                <input type="text" class="form-control" formControlName="lastName" id="basicInput">
+                                                <span class="text-danger" *ngIf="displayMessage.lastName">
+                                                    {{displayMessage.lastName}}
+                                                </span>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Address'}}</label>
+                                                <input type="text" class="form-control" formControlName="address" id="basicInput">
+                                                <span class="text-danger" *ngIf="displayMessage.address">
+                                                    {{displayMessage.address}}
+                                                </span>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Phone Number'}}</label>
+                                                <app-phone-input [form]="form" [fControlName]="'mobile'" [id]="'mobileNumber'" [telInputOptions]="{initialCountry: defaultMobileCountry, preferredCountries:['sy'], separateDialCode: true, formatOnDisplay: false}" [phoneNumber]="phoneNumber" (getPhoneNumberValidator)="setPhoneValidator($event)"
+                                                    (getPhoneNumber)="setPhoneNumber($event)">
+                                                </app-phone-input>
+                                                <span class="text-danger" *ngIf="displayMessage.phoneNumber">
+                                                    {{displayMessage.phoneNumber}}
+                                                </span>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Email'}}</label>
+                                                <input type="text" class="form-control" formControlName="email" id="basicInput">
+                                                <span class="text-danger" *ngIf="displayMessage.email">
+                                                    {{displayMessage.email}}
+                                                </span>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Password'}}</label>
+                                                <input type="text" class="form-control" formControlName="password" id="basicInput">
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2 mr-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="text-right">
+                                    <button class="btn round mr1-ml-1 button-white" (click)="closePopUp()">{{'Cancel'}}</button>
+                                    <button (click)="addClient()" [disabled]="!form.valid" class="btn round mr-1 ml-1 button-green" type="submit">{{'Save'}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-template>
+
+    <ng-template #updateClientTemplate let-row="row" let-modal class="update-employee-modal">
+        <section id="basic-input">
+            <div class="row bg-lightGray">
+                <div class="col-12">
+                    <div class="card bg-lightGray-card">
+                        <div class="card-header">
+                            <h4 class="Subtitle-Left">{{'Add New Client'}}</h4>
+                        </div>
+                        <form [formGroup]="form">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Company Id'}}</label>
+                                                <input type="text" class="form-control" formControlName="companyId" id="basicInput">
+                                                <span class="text-danger" *ngIf="displayMessage.companyId">
+                                                    {{displayMessage.companyId}}
+                                                </span>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Company Name'}}</label>
+                                                <input type="text" class="form-control" formControlName="companyName" id="basicInput">
+                                                <span class="text-danger" *ngIf="displayMessage.companyName">
+                                                    {{displayMessage.companyName}}
+                                                </span>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Credit Limit'}}</label>
+                                                <input type="number" class="form-control" formControlName="creditLimit" id="basicInput">
+                                                <span class="text-danger" *ngIf="displayMessage.creditLimit">
+                                                    {{displayMessage.creditLimit}}
+                                                </span>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Period'}}</label>
+                                                <input type="number" class="form-control" formControlName="period" id="basicInput">
+                                                <span class="text-danger" *ngIf="displayMessage.period">
+                                                    {{displayMessage.period}}
+                                                </span>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Discount Limit'}}</label>
+                                                <ng-select formControlName="discount" [items]="types" bindValue="name" bindLabel="name" [clearable]="false">
+                                                </ng-select>
+                                                <span class="text-danger" *ngIf="displayMessage.type">
+                                                    {{displayMessage.type}}
+                                                </span>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Documents'}}</label>
+                                                <label for="uploader-input-documents" ng2FileDrop [ngClass]="{'nv-file-over': hasDocumentsBaseDropZoneOver}" (fileOver)="documentsOverBase($event)" id="OpenTemplateUpload" [uploader]="documentsUploader" class="py-5 w-100 text-center grey my-drop-zone drag-and-drop">
+
+                                                    <div
+                                                        *ngIf="documentsUploader.queue.length >= 1"
+                                                        class="check-text">
+                                                        <img
+                                                            src="../../../../../assets/img/memo-check-green.png"
+                                                            alt>
+                                                        <!-- <i class="fa fa-check-circle-o mb-2 check" aria-hidden="true"></i> -->
+                                                        <p class="mb-0"
+                                                            style=" font-weight: bolder;text-transform:none">{{'File uploaded successfully.'}}</p>
+                                                        <p
+                                                            style="text-transform:none">{{'Click on Save & Continue to proceed.'}}</p>
+                                                    </div>
+
+                                                    <div class
+                                                        *ngIf="documentsUploader.queue.length < 1"
+                                                        style="text-transform:none">
+                                                        <nb-icon
+                                                            icon="cloud-upload-outline"
+                                                            style="font-size:60px;"></nb-icon><br><br>
+                                                        <p>{{'Upload the'}}<br>{{'User Documents'}}</p>
+                                                    </div>
+                                                </label>
+                                                <input type="file" ng2FileSelect [uploader]="documentsUploader" id="uploader-input-documents" multiple style="display:none" (change)="handleFileInput()" />
+                                                <div *ngFor="let item of this.documentsUploader.queue; let i = index">
+                                                    {{item?.file?.name}}
+                                                    <nb-icon (click)="clearDragAndDropDocuments(i,item);" icon="trash-2-outline" style="font-size:15px;"></nb-icon><br><br>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group">
+                                                <div class="row">
+                                                    <label class="Label-blue" for="basicInput">{{'Contact Persons  (optional)'}}</label>
+                                                    <div class="col-md-1">
+                                                        <nb-icon (click)="onContactPersonModalOpen(addContactPersonTemplate)" icon="plus-circle-outline" class="text-primary cursor-pointer mr-2"></nb-icon>
+                                                    </div>
+                                                </div>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr class="Label-blue">
+                                                            <th>{{'Name'}}</th>
+                                                            <th>{{'Mobile'}}</th>
+                                                            <th>{{'Title'}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let row of persons let i = index  ">
+                                                            <td>{{row.name}}</td>
+                                                            <td>{{row.mobileNumber}}</td>
+                                                            <td>{{row.title}}</td>
+                                                            <td>
+                                                                <div>
+                                                                    <input [(ngModel)]="row.isDefault" (click)="IsDefaultContactPerson(i)" [ngModelOptions]="{standalone: true}" [disabled]="isDefault" name="isDefault" type="checkbox" class="m-1" />
+                                                                    <span style="font-weight: 200;">
+                                                                        {{"Default"}}</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row mb-2 mr-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="text-right">
+                                    <button class="btn round mr1-ml-1 button-white" (click)="onNavigateToClients()">{{'Cancel'}}</button>
+                                    <button class="btn round mr-1 ml-1 button-green" (click)="AddClient()" type="submit">{{'Save'}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-template>
+
+    <ng-template #resetPasswordTemplate let-model>
+        <section id="basic-input">
+            <div class="row bg-lightGray">
+                <div class="col-12">
+                    <div class="card bg-lightGray-card">
+                        <div class="card-header">
+                            <h4 class="Subtitle-Left">{{'Reset Password'}}</h4>
+                        </div>
+                        <form [formGroup]="passwordForm">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset class="form-group">
+                                                <label class="Label-blue" for="basicInput">{{'Reset Password'}}</label>
+                                                <input type="text" class="form-control" formControlName="password" id="basicInput">
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row mb-2 mr-2">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="text-right">
+                                    <button class="btn round mr1-ml-1 button-white" (click)="closePopUp()">{{'Cancel'}}</button>
+                                    <button class="btn round mr-1 ml-1 button-green" type="submit" (click)="resetPassword()">{{'Reset'}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ng-template>
+
+</div>

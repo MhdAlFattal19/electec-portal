@@ -1,0 +1,81 @@
+<div class="company-header">
+    <img src="assets/images/logo.png" alt="Company Logo" />
+</div>
+<nb-card>
+    <nb-card-header class="page-header">
+        <nb-icon icon="clipboard-outline"></nb-icon>
+        الاستبيانات المرسلة
+    </nb-card-header>
+
+    <nb-card-body>
+
+        <div *ngIf="loading" class="loading">
+            جاري تحميل البيانات...
+        </div>
+
+        <div *ngIf="!loading && surveys.length === 0" class="empty">
+            لا يوجد استبيانات بعد
+        </div>
+
+        <div class="list" *ngIf="!loading">
+
+            <nb-card *ngFor="let s of surveys; let i = index; trackBy: trackById" class="survey-card">
+
+                <!-- HEADER -->
+                <div class="survey-header" [ngClass]="getRatingClass(s.rating)" (click)="toggle(i)">
+
+                    <!-- LEFT: DATE (تم عكسه) -->
+                    <div class="left date">
+                        {{ s.createdAt?.toDate() | date:' HH:mm • yyyy/MM/dd' }}
+                    </div>
+
+                    <!-- CENTER: RATING (تم نقله للوسط) -->
+                    <div class="center rating">
+                        <nb-icon *ngFor="let x of [1,2,3,4,5]" icon="star" [class.active]="x <= s.rating">
+                        </nb-icon>
+                    </div>
+
+                    <!-- RIGHT: NAME + META -->
+                    <div class="right info">
+                        <div class="name">{{ s.fullName }}</div>
+                        <div class="meta">
+                            {{ s.mobile }}
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- BODY -->
+                <div class="survey-body" *ngIf="isOpen(i)">
+
+                    <div class="row"><span>اسم الفني:</span><b>{{
+                            s.technicianName }}</b></div>
+                    <div class="row"><span>تمت الصيانة:</span><b>{{ s.success ?
+                            'نعم' : 'لا' }}</b></div>
+                    <div class="row"><span>المبلغ المدفوع:</span><b>{{ s.amount
+                            }}</b></div>
+
+                    <div class="row">
+                        <span>أنواع الصيانة:</span>
+                        <b>
+                            {{ s.maintenance?.power ? 'منظومة طاقة، ' : '' }}
+                            {{ s.maintenance?.inverter ? 'إنفرتر، ' : '' }}
+                            {{ s.maintenance?.lithium ? 'بطارية ليثيوم، ' : ''
+                            }}
+                            {{ s.maintenance?.agm ? 'AGM، ' : '' }}
+                            {{ s.maintenance?.ups ? 'UPS' : '' }}
+                        </b>
+                    </div>
+
+                    <div class="row" *ngIf="s.notes">
+                        <span>ملاحظات:</span><b>{{ s.notes }}</b>
+                    </div>
+
+                </div>
+
+            </nb-card>
+
+        </div>
+
+    </nb-card-body>
+</nb-card>

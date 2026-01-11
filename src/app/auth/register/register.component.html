@@ -1,0 +1,59 @@
+<div class="login-bg">
+    <div class="login-card">
+        <div class="login-title">Register</div>
+        <div class="login-subtitle"></div>
+
+        <form (ngSubmit)="register()" #form="ngForm" aria-labelledby="title">
+            <div class="form-fields">
+
+                <!-- Full Name -->
+                <div class="form-row">
+                    <label for="input-fullname">Full Name:</label>
+                    <input nbInput fullWidth [(ngModel)]="user.fullName" #fullName="ngModel" name="fullName" id="input-fullname" placeholder="Enter your full name" [status]="fullName.dirty ? (fullName.invalid  ? 'danger' : 'primary') : ''" [required]="true" [attr.aria-invalid]="fullName.invalid && fullName.touched ? true : null">
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-row">
+                    <label for="input-phone">Phone Number:</label>
+                    <input nbInput fullWidth [(ngModel)]="user.phone" #phone="ngModel" name="phone" id="input-phone" type="tel" placeholder="Enter your phone number" pattern="[0-9]{10,15}" [status]="phone.dirty ? (phone.invalid  ? 'danger' : 'primary') : ''" [required]="true"
+                        [attr.aria-invalid]="phone.invalid && phone.touched ? true : null">
+                </div>
+
+                <!-- Address -->
+                <div class="form-row">
+                    <label for="input-address">Address:</label>
+                    <input nbInput fullWidth [(ngModel)]="user.address" #address="ngModel" name="address" id="input-address" placeholder="Enter your address" [status]="address.dirty ? (address.invalid  ? 'danger' : 'primary') : ''" [required]="true" [attr.aria-invalid]="address.invalid && address.touched ? true : null">
+                </div>
+
+                <!-- Email -->
+                <div class="form-row">
+                    <label for="input-email">Email address:</label>
+                    <input nbInput fullWidth [(ngModel)]="user.email" #email="ngModel" name="email" id="input-email" pattern=".+@.+\..+" placeholder="Enter your email" [status]="email.dirty ? (email.invalid  ? 'danger' : 'primary') : ''" [required]="getConfigValue('forms.validation.email.required')"
+                        [attr.aria-invalid]="email.invalid && email.touched ? true : null">
+                </div>
+                <!-- Password -->
+                <div class="form-row">
+                    <label for="input-password">Password:</label>
+                    <input nbInput fullWidth [(ngModel)]="user.password" #password="ngModel" name="password" id="input-password" [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password" [status]="password.dirty ? (password.invalid  ? 'danger' : 'primary') : ''"
+                        [required]="getConfigValue('forms.validation.password.required')" [minlength]="4" [maxlength]="20" [attr.aria-invalid]="password.invalid && password.touched ? true : null">
+                </div>
+            </div>
+            <button nbButton fullWidth status="primary" class="login-btn" [disabled]="submitted || !form.valid" [class.btn-pulse]="submitted" (click) ="onNavigateToVerifyCode()">
+                Register
+            </button>
+        </form>
+        <br>
+        <div class="or-text">or enter with:</div>
+        <div class="socials">
+            <button nbButton ghost shape="round" size="large">
+                <nb-icon icon="google" pack="eva"></nb-icon>
+            </button>
+            <button nbButton ghost shape="round" size="large">
+                <nb-icon icon="facebook" pack="eva"></nb-icon>
+            </button>
+        </div>
+        <div class="register-line">
+            Do you have an account? <a routerLink="/auth/login" class="register-link">Login</a>
+        </div>
+    </div>
+</div>

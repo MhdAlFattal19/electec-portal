@@ -1,0 +1,6 @@
+<div [formGroup]="form" id="formContainer">
+    <input type="text" id="mobileNumber" ng2TelInput [ng2TelInputOptions]="telInputOptions"
+        [formControlName]="fControlName" [disabled]="disabled" class="form-control" (hasError)="hasError($event)"
+        (change)="inputChange()" (intlTelInputObject)="telInputObject($event)"
+        (countryChange)="onCountryChange($event)" />
+</div>
