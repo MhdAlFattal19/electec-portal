@@ -48,7 +48,6 @@
         "@ng-bootstrap/ng-bootstrap": "^14.2.0",
         "@ng-select/ng-select": "^10.0.4",
         "@popperjs/core": "^2.11.6",
-        "@swimlane/ngx-charts": "^14.0.0",
         "@swimlane/ngx-datatable": "^20.1.0",
         "@types/d3-color": "1.0.5",
         "@types/jasmine": "~3.3.0",
