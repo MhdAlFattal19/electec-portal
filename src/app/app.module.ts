@@ -31,6 +31,7 @@ import { SharedModule } from './shared/shared.module';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -61,6 +62,7 @@ import { environment } from '../environments/environment';
     AngularFirestoreModule,
   ],
   providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: NB_LAYOUT_DIRECTION, useValue: NbLayoutDirection.RTL },
   ],
   bootstrap: [AppComponent],
